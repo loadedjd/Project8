@@ -65,23 +65,24 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: <\"IF\"> is proper prefix of tokens";
 
         // TODO - fill in body
-        tokens.dequeue();
+        tokens.dequeue(); // if
 
-        String nToken = tokens.dequeue();
-        Reporter.assertElseFatalError(Tokenizer.isCondition(nToken),
-                "Error: CONDITION expected, found: \"" + nToken + "\"");
-        Condition c = parseCondition(nToken);
+        String condition = tokens.dequeue(); // condition
+        Reporter.assertElseFatalError(Tokenizer.isCondition(condition),
+                "Error: CONDITION expected, found: \"" + condition + "\"");
+        Condition c = parseCondition(condition);
 
         Reporter.assertElseFatalError(tokens.front().equals("THEN"),
                 "Error: Keyword \"THEN\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // then
 
         Statement s1 = s.newInstance();
         s1.parseBlock(tokens);
 
         if (tokens.front().equals("ELSE")) {
             Statement s2 = s.newInstance();
+            tokens.dequeue(); // ELSE
             s2.parseBlock(tokens);
             s.assembleIfElse(c, s1, s2);
         } else {
@@ -90,12 +91,12 @@ public final class Statement1Parse1 extends Statement1 {
 
         Reporter.assertElseFatalError(tokens.front().equals("END"),
                 "Error: CONDITION expected, found: \"" + tokens.front() + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // end
 
         Reporter.assertElseFatalError(tokens.front().equals("IF"),
                 "Error: Keyword \"IF\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // if
 
     }
 
@@ -128,17 +129,17 @@ public final class Statement1Parse1 extends Statement1 {
 
         // TODO - fill in body
 
-        tokens.dequeue();
+        tokens.dequeue(); // while
 
-        String nToken = tokens.dequeue();
-        Reporter.assertElseFatalError(Tokenizer.isCondition(nToken),
-                "Error: CONDITION expected, found: \"" + nToken + "\"");
-        Condition c = parseCondition(nToken);
+        String condition = tokens.dequeue(); // condition
+        Reporter.assertElseFatalError(Tokenizer.isCondition(condition),
+                "Error: CONDITION expected, found: \"" + condition + "\"");
+        Condition c = parseCondition(condition);
 
         Reporter.assertElseFatalError(tokens.front().equals("DO"),
                 "Error: Keyword \"DO\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // do
 
         Statement s1 = s.newInstance();
         s1.parseBlock(tokens);
@@ -147,12 +148,12 @@ public final class Statement1Parse1 extends Statement1 {
 
         Reporter.assertElseFatalError(tokens.front().equals("END"),
                 "Error: CONDITION expected, found: \"" + tokens.front() + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // end
 
         Reporter.assertElseFatalError(tokens.front().equals("WHILE"),
                 "Error: Keyword \"WHILE\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // while
 
     }
 

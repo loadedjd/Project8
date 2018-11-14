@@ -20,7 +20,7 @@ public abstract class ProgramTest {
      * The names of a files containing a (possibly invalid) BL programs.
      */
     private static final String FILE_NAME_1 = "test/program1.bl",
-            FILE_NAME_2 = "test/program2.bl";
+            FILE_NAME_2 = "test/program2.bl", FILE_NAME_3 = "test/program3.bl";
 
     /**
      * Invokes the {@code Program} constructor for the implementation under test
@@ -85,6 +85,33 @@ public abstract class ProgramTest {
     }
 
     // TODO - add more test cases for valid inputs
+    /**
+     * Test of parse on syntactically valid input.
+     */
+    @Test
+    public final void testParseValidExample2() {
+        /*
+         * Setup
+         */
+        Program pRef = this.constructorRef();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_3);
+        pRef.parse(file);
+        file.close();
+        
+        Program pTest = this.constructorTest();
+        file = new SimpleReader1L(FILE_NAME_3);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call
+         */
+        pTest.parse(tokens);
+        /*
+         * Evaluation
+         */
+        assertEquals(pRef, pTest);
+    }
+    
     // TODO - add more test cases for as many distinct syntax errors as possible
 
 }

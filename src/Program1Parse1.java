@@ -59,7 +59,7 @@ public final class Program1Parse1 extends Program1 {
                 + "Violation of: <\"INSTRUCTION\"> is proper prefix of tokens";
 
         // TODO - fill in body
-        tokens.dequeue();
+        tokens.dequeue(); // Instruction
         //save name for reference
         String name = tokens.dequeue();
         Reporter.assertElseFatalError(Tokenizer.isIdentifier(name),
@@ -68,18 +68,18 @@ public final class Program1Parse1 extends Program1 {
         Reporter.assertElseFatalError(tokens.front().equals("IS"),
                 "Error: Keyword \"IS\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // is
 
         body.parseBlock(tokens);
         Reporter.assertElseFatalError(tokens.front().equals("END"),
                 "Error: Keyword \"END\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // end
         Reporter.assertElseFatalError(tokens.front().equals(name),
                 "Error: IDENTIFIER \"" + tokens.front()
                         + "\" at end of instruction \"" + name
                         + "\" must match instruction name");
-        tokens.dequeue();
+        tokens.dequeue(); // Name
 
         return name;
     }
@@ -118,10 +118,10 @@ public final class Program1Parse1 extends Program1 {
         Reporter.assertElseFatalError(tokens.front().equals("PROGRAM"),
                 "Keyword \"PROGRAM\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // Program
 
         //save name for reference
-        String name = tokens.dequeue();
+        String name = tokens.dequeue(); // name
 
         Reporter.assertElseFatalError(Tokenizer.isIdentifier(name),
                 "Keyword \"IDENTIFIER\" expected, found: \"" + name + "\"");
@@ -129,13 +129,14 @@ public final class Program1Parse1 extends Program1 {
 
         Reporter.assertElseFatalError(tokens.front().equals("IS"),
                 "Keyword \"IS\" expected, found: \"" + tokens.front() + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // is
 
         Map<String, Statement> context = this.newContext();
-        Statement s1 = this.newBody();
+        
         while (tokens.front().equals("INSTRUCTION")) {
+        	Statement s1 = this.newBody();
 
-            String n = parseInstruction(tokens, s1);
+            String n = parseInstruction(tokens, s1); // returns name of Instruction
             Reporter.assertElseFatalError(!context.hasKey(n),
                     "\"IDENTIFIER\" expected, found: \"" + n + "\"");
             context.add(n, s1);
@@ -145,19 +146,22 @@ public final class Program1Parse1 extends Program1 {
         Reporter.assertElseFatalError(tokens.front().equals("BEGIN"),
                 "Keyword \"BEGIN\" expected, found: \"" + tokens.front()
                         + "\"");
-        tokens.dequeue();
+        tokens.dequeue(); // begin
 
         Statement s2 = this.newBody();
         s2.parseBlock(tokens);
         this.replaceBody(s2);
         Reporter.assertElseFatalError(tokens.front().equals("END"),
                 "Keyword \"END\" expected, found: \"### END OF INPUT ###\"");
-        tokens.dequeue();
+        tokens.dequeue(); // end
         Reporter.assertElseFatalError(tokens.front().equals(name),
                 "IDENTIFIER \"" + tokens.front() + "\" at end of program \""
                         + name + "\" must match program name");
-        tokens.dequeue();
-
+        tokens.dequeue(); // program name  
+        
+        Reporter.assertElseFatalError(tokens.length() == 1, "expected end of input");
+        
+        
     }
 
     /*

@@ -1,0 +1,15 @@
+PROGRAM Test IS
+BEGIN
+  infect
+  WHILE true DO
+
+    IF next-is-empty THEN
+      move
+      WHILE true DO
+      	IF next-is-enemy THEN
+      		infect
+      	END IF
+      END WHILE
+    END IF
+   END WHILE
+END Test

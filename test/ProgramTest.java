@@ -20,7 +20,10 @@ public abstract class ProgramTest {
      * The names of a files containing a (possibly invalid) BL programs.
      */
     private static final String FILE_NAME_1 = "test/program1.bl",
-            FILE_NAME_2 = "test/program2.bl", FILE_NAME_3 = "test/program3.bl";
+            FILE_NAME_2 = "test/program2.bl", FILE_NAME_3 = "test/program3.bl", FILE_NAME_4 = "test/program4.bl",
+            FILE_NAME_5 = "test/program5.bl", 
+            FILE_NAME_6 = "test/program6.bl", FILE_NAME_7 = "test/program6.bl", 
+            FILE_NAME_8 = "test/program8.bl";
 
     /**
      * Invokes the {@code Program} constructor for the implementation under test
@@ -112,6 +115,103 @@ public abstract class ProgramTest {
         assertEquals(pRef, pTest);
     }
     
+    @Test
+    public final void testParseValidExample4() {
+        /*
+         * Setup
+         */
+        Program pRef = this.constructorRef();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_8);
+        pRef.parse(file);
+        file.close();
+        
+        Program pTest = this.constructorTest();
+        file = new SimpleReader1L(FILE_NAME_8);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call
+         */
+        pTest.parse(tokens);
+        /*
+         * Evaluation
+         */
+        assertEquals(pRef, pTest);
+    }
+    
     // TODO - add more test cases for as many distinct syntax errors as possible
+    
+    /**
+     * Test of parse on syntactically invalid input.
+     */
+    @Test(expected = RuntimeException.class)
+    public final void testParseErrorExampleMissingIfEnd() {
+        /*
+         * Setup
+         */
+        Program pTest = this.constructorTest();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_4);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call--should result in a syntax error being found
+         */
+        pTest.parse(tokens);
+    }
+    
+    @Test
+    public final void testParseValidExample3() {
+        /*
+         * Setup
+         */
+        Program pRef = this.constructorRef();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_5);
+        pRef.parse(file);
+        file.close();
+        
+        Program pTest = this.constructorTest();
+        file = new SimpleReader1L(FILE_NAME_5);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call
+         */
+        pTest.parse(tokens);
+        /*
+         * Evaluation
+         */
+        assertEquals(pRef, pTest);
+    }
+    
+    @Test(expected = RuntimeException.class)
+    public final void testParseErrorExampleNoneMatchingIdentifier() {
+        /*
+         * Setup
+         */
+        Program pTest = this.constructorTest();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_6);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call--should result in a syntax error being found
+         */
+        pTest.parse(tokens);
+    }
+    
+    @Test(expected = RuntimeException.class)
+    public final void testParseErrorExampleNotIdentifier() {
+        /*
+         * Setup
+         */
+        Program pTest = this.constructorTest();
+        SimpleReader file = new SimpleReader1L(FILE_NAME_7);
+        Queue<String> tokens = Tokenizer.tokens(file);
+        file.close();
+        /*
+         * The call--should result in a syntax error being found
+         */
+        pTest.parse(tokens);
+    }
+
 
 }

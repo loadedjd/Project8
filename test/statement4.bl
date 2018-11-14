@@ -1,0 +1,9 @@
+IF next-is-wall DO
+  move
+  IF this-is-not-a-valid-condition THEN
+  END IF
+  IF random THEN
+    turnleft
+    infect
+  skip
+END WHILE

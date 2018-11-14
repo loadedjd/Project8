@@ -1,0 +1,8 @@
+PROGRAM Example1 IS
+BEGIN
+    IF next-is-wall THEN
+        turnright
+        turnright
+        infect
+    END
+END Example1

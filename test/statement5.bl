@@ -1,0 +1,11 @@
+WHILE true DO
+	move
+	move
+	
+	IF next-is-enemy THEN
+		turnright
+		turnright
+		move
+		move
+	END IF
+END WHILE
